@@ -1,0 +1,12 @@
+package com.example.data.local.entities
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "folders")
+data class FolderEntity(
+    @PrimaryKey val id: String,
+    val name: String,
+    val filterTypes: String,
+    val orderIndex: Int
+)
