@@ -25,6 +25,9 @@ jobs:
     - name: Fix signingConfig in build.gradle.kts
       run: sed -i 's/signingConfig = signingConfigs.getByName("debugConfig")/\/\/ removed signing config/g' app/build.gradle.kts
 
+    - name: Generate Gradle Wrapper
+      run: gradle wrapper
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
