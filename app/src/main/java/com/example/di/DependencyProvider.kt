@@ -78,6 +78,20 @@ object DependencyProvider {
     lateinit var acceptCallUseCase: AcceptCallUseCase
         private set
 
+    // New Advanced Modules
+    lateinit var advancedKeyManager: com.example.crypto.AdvancedKeyManager
+        private set
+    lateinit var cryptoVault: com.example.crypto.CryptoVault
+        private set
+    lateinit var biometricAuthManager: com.example.crypto.BiometricAuthManager
+        private set
+    lateinit var sqlCipherConfig: com.example.crypto.SqlCipherConfig
+        private set
+    lateinit var syncStateManager: com.example.sync.SyncStateManager
+        private set
+    lateinit var geminiBotOrchestrator: com.example.ai.GeminiBotOrchestrator
+        private set
+
     fun initialize(application: Application) {
         context = application.applicationContext
         
@@ -122,6 +136,14 @@ object DependencyProvider {
         syncOfflineMessagesUseCase = SyncOfflineMessagesUseCase()
         initiateCallUseCase = InitiateCallUseCase()
         acceptCallUseCase = AcceptCallUseCase()
+
+        // Initialize Advanced Modules
+        advancedKeyManager = com.example.crypto.AdvancedKeyManager()
+        cryptoVault = com.example.crypto.CryptoVault()
+        biometricAuthManager = com.example.crypto.BiometricAuthManager()
+        sqlCipherConfig = com.example.crypto.SqlCipherConfig()
+        syncStateManager = com.example.sync.SyncStateManager()
+        geminiBotOrchestrator = com.example.ai.GeminiBotOrchestrator()
     }
 
     val factory = object : ViewModelProvider.Factory {

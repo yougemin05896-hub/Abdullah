@@ -12,6 +12,8 @@ import com.example.presentation.call.ActiveCallScreen
 import com.example.presentation.chat.ChatScreen
 import com.example.presentation.inbox.InboxScreen
 import com.example.presentation.settings.SettingsScreen
+import com.example.presentation.folders.FoldersScreen
+import com.example.presentation.bot_store.BotStoreScreen
 
 @Composable
 fun GlassNavGraph(navController: NavHostController) {
@@ -26,7 +28,9 @@ fun GlassNavGraph(navController: NavHostController) {
         composable("inbox") {
             InboxScreen(
                 onNavigateToChat = { chatId -> navController.navigate("chat/$chatId") },
-                onNavigateToSettings = { navController.navigate("settings") }
+                onNavigateToSettings = { navController.navigate("settings") },
+                onNavigateToFolders = { navController.navigate("folders") },
+                onNavigateToBotStore = { navController.navigate("bot_store") }
             )
         }
         composable("chat/{chatId}") {
@@ -42,6 +46,16 @@ fun GlassNavGraph(navController: NavHostController) {
         }
         composable("settings") {
             SettingsScreen(
+                onNavigateBack = { navController.navigateUp() }
+            )
+        }
+        composable("folders") {
+            FoldersScreen(
+                onNavigateBack = { navController.navigateUp() }
+            )
+        }
+        composable("bot_store") {
+            BotStoreScreen(
                 onNavigateBack = { navController.navigateUp() }
             )
         }

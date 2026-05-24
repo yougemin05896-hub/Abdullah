@@ -6,7 +6,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class GlassMessengerApp : Application() {
+class XGenamApp : Application() {
     override fun onCreate() {
         super.onCreate()
         DependencyProvider.initialize(this)

@@ -74,7 +74,12 @@ dependencies {
   implementation(platform(libs.firebase.bom))
   // implementation(libs.accompanist.permissions)
   implementation(libs.androidx.activity.compose)
-  // implementation(libs.androidx.camera.camera2)
+  implementation("androidx.paging:paging-runtime-ktx:3.2.1")
+  implementation("androidx.work:work-runtime-ktx:2.9.0")
+  implementation("net.zetetic:android-database-sqlcipher:4.5.4")
+  implementation("androidx.biometric:biometric:1.2.0-alpha05")
+  implementation(libs.androidx.camera.camera2)
+
   // implementation(libs.androidx.camera.core)
   implementation("javax.inject:javax.inject:1")
   // implementation(libs.androidx.camera.view)
