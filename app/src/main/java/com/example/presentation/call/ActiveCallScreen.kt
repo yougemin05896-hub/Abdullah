@@ -22,7 +22,8 @@ import com.example.di.DependencyProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.ui.components.liquidGlass
 import com.example.ui.theme.DeepCyan
-import com.example.ui.theme.ErrorRed
+import com.example.ui.theme.AmoledLightGray
+import androidx.compose.ui.graphics.Color
 import com.example.ui.theme.PitchBlack
 import com.example.ui.theme.TypographyPrimary
 
@@ -69,7 +70,7 @@ fun ActiveCallScreen(
                     modifier = Modifier
                         .size(64.dp)
                         .clip(CircleShape)
-                        .background(com.example.ui.theme.GlassDarkGrey)
+                        .background(AmoledLightGray)
                 ) {
                     Icon(
                         imageVector = if (state.isMuted) Icons.Default.MicOff else Icons.Default.Mic,
@@ -86,7 +87,7 @@ fun ActiveCallScreen(
                     modifier = Modifier
                         .size(64.dp)
                         .clip(CircleShape)
-                        .background(ErrorRed)
+                        .background(Color.Red)
                 ) {
                     Icon(
                         imageVector = Icons.Default.CallEnd,

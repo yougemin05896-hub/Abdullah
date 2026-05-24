@@ -1,63 +1,70 @@
 package com.example.presentation.navigation
 
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.presentation.call.ActiveCallScreen
 import com.example.presentation.chat.ChatScreen
+import com.example.presentation.chat.SavedMessagesScreen
+import com.example.presentation.chat.ActiveCallScreen
 import com.example.presentation.inbox.InboxScreen
 import com.example.presentation.settings.SettingsScreen
+import com.example.presentation.settings.PrivacySecurityScreen
+import com.example.presentation.settings.DataStorageScreen
+import com.example.presentation.settings.ChatSettingsScreen
+import com.example.presentation.contacts.ContactsScreen
 import com.example.presentation.folders.FoldersScreen
 import com.example.presentation.bot_store.BotStoreScreen
+import com.example.presentation.profile.UserProfileScreen
 
 @Composable
 fun GlassNavGraph(navController: NavHostController) {
-    NavHost(
-        navController = navController,
-        startDestination = "inbox",
-        enterTransition = { slideInHorizontally(initialOffsetX = { 1000 }) + fadeIn() },
-        exitTransition = { slideOutHorizontally(targetOffsetX = { -1000 }) + fadeOut() },
-        popEnterTransition = { slideInHorizontally(initialOffsetX = { -1000 }) + fadeIn() },
-        popExitTransition = { slideOutHorizontally(targetOffsetX = { 1000 }) + fadeOut() }
-    ) {
+    NavHost(navController = navController, startDestination = "inbox") {
         composable("inbox") {
             InboxScreen(
                 onNavigateToChat = { chatId -> navController.navigate("chat/$chatId") },
-                onNavigateToSettings = { navController.navigate("settings") },
-                onNavigateToFolders = { navController.navigate("folders") },
-                onNavigateToBotStore = { navController.navigate("bot_store") }
+                onNavigateToSettings = { navController.navigate("settings_main") },
+                onNavigateToContacts = { navController.navigate("contacts") },
+                onNavigateToSaved = { navController.navigate("saved_messages") }
             )
         }
-        composable("chat/{chatId}") {
+        composable("chat/{chatId}") { backStackEntry ->
+            val chatId = backStackEntry.arguments?.getString("chatId") ?: return@composable
             ChatScreen(
+                chatId = chatId,
                 onNavigateBack = { navController.navigateUp() },
-                onNavigateToCall = { navController.navigate("call") }
+                onNavigateToProfile = { navController.navigate("profile/$chatId") },
+                onNavigateToCall = { navController.navigate("active_call") }
             )
         }
-        composable("call") {
-            ActiveCallScreen(
-                onEndCall = { navController.navigateUp() }
-            )
+        composable("active_call") {
+            ActiveCallScreen(onEndCall = { navController.navigateUp() })
         }
-        composable("settings") {
+        composable("saved_messages") {
+            SavedMessagesScreen(onNavigateBack = { navController.navigateUp() })
+        }
+        composable("profile/{userId}") {
+            UserProfileScreen(onNavigateBack = { navController.navigateUp() })
+        }
+        composable("settings_main") {
             SettingsScreen(
-                onNavigateBack = { navController.navigateUp() }
+                onNavigateBack = { navController.navigateUp() },
+                onNavigateToPrivacy = { navController.navigate("settings_privacy") },
+                onNavigateToData = { navController.navigate("settings_data") },
+                onNavigateToChatSettings = { navController.navigate("settings_chat") }
             )
         }
-        composable("folders") {
-            FoldersScreen(
-                onNavigateBack = { navController.navigateUp() }
-            )
+        composable("settings_privacy") {
+            PrivacySecurityScreen(onNavigateBack = { navController.navigateUp() })
         }
-        composable("bot_store") {
-            BotStoreScreen(
-                onNavigateBack = { navController.navigateUp() }
-            )
+        composable("settings_data") {
+            DataStorageScreen(onNavigateBack = { navController.navigateUp() })
+        }
+        composable("settings_chat") {
+            ChatSettingsScreen(onNavigateBack = { navController.navigateUp() })
+        }
+        composable("contacts") {
+            ContactsScreen(onNavigateBack = { navController.navigateUp() })
         }
     }
 }

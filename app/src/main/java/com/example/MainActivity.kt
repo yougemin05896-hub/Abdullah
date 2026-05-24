@@ -9,14 +9,14 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.example.presentation.navigation.GlassNavGraph
-import com.example.ui.theme.MyApplicationTheme
+import com.example.ui.theme.ApplicationTheme
 import com.example.ui.theme.PitchBlack
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MyApplicationTheme {
+            ApplicationTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = PitchBlack

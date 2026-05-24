@@ -1,69 +1,63 @@
 package com.example.presentation.settings
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.DataUsage
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Wallpaper
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.di.DependencyProvider
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.ui.components.liquidGlass
-import com.example.ui.theme.DeepCyan
-import com.example.ui.theme.PitchBlack
-import com.example.ui.theme.TypographyPrimary
+import com.example.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
-    viewModel: SettingsViewModel = viewModel(factory = DependencyProvider.factory),
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    onNavigateToPrivacy: () -> Unit,
+    onNavigateToData: () -> Unit,
+    onNavigateToChatSettings: () -> Unit
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
-
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Settings") },
+                title = { Text("Settings", color = TypographyPrimary) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = TypographyPrimary)
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = PitchBlack.copy(alpha = 0.5f),
-                    titleContentColor = DeepCyan,
-                    navigationIconContentColor = DeepCyan,
-                    actionIconContentColor = DeepCyan
-                ),
-                modifier = Modifier.liquidGlass(cornerRadius = 0.dp, borderWidth = 0.dp)
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = PitchBlack)
             )
         },
-        containerColor = PitchBlack
+        containerColor = AmoledGray
     ) { padding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(16.dp)
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text("End-to-End Encryption", color = TypographyPrimary)
-                Switch(
-                    checked = state.isE2eeEnabled,
-                    onCheckedChange = { viewModel.toggleE2ee() },
-                    colors = SwitchDefaults.colors(checkedThumbColor = DeepCyan)
-                )
+        LazyColumn(contentPadding = padding) {
+            item { 
+                Box(modifier = Modifier.clickable { }) {
+                    SettingsOption(icon = Icons.Default.Notifications, title = "Notifications and Sounds") 
+                }
+            }
+            item { 
+                Box(modifier = Modifier.clickable { onNavigateToPrivacy() }) {
+                    SettingsOption(icon = Icons.Default.Lock, title = "Privacy and Security") 
+                }
+            }
+            item { 
+                Box(modifier = Modifier.clickable { onNavigateToData() }) {
+                    SettingsOption(icon = Icons.Default.DataUsage, title = "Data and Storage") 
+                }
+            }
+            item { 
+                Box(modifier = Modifier.clickable { onNavigateToChatSettings() }) {
+                    SettingsOption(icon = Icons.Default.Wallpaper, title = "Chat Settings") 
+                }
             }
         }
     }
